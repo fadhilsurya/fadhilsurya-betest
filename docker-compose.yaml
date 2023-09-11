@@ -1,0 +1,36 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: betest
+      MONGO_INITDB_ROOT_PASSWORD: betest
+
+  mongo-express:
+    image: mongo-express:latest # latest image
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: betest
+      ME_CONFIG_MONGODB_ADMINPASSWORD: betest
+      ME_CONFIG_MONGODB_SERVER: mongodb 
+      # use the name of the mongo container above for server env var.
+      # In our case this is mongodb
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server /data/redis.conf  # Specify the Redis configuration file
+  
+
+volumes:
+  mongodb-data:

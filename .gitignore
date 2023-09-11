@@ -128,3 +128,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# because we use docker-compose to install mongoDB we need to ignore this in git
+moongodb-data
